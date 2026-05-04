@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocabulary for the Carrigan Listening — PSE 2026 M2 W7</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Calibri',Arial,sans-serif;background:#F4F6F8;padding:16px;min-height:100vh}
+.container{border:1px solid #B8C8D8;border-radius:8px;overflow:hidden;max-width:860px;margin:0 auto;background:#fff}
+.hw-header{background:#1A3A5C;padding:16px 20px;display:flex;align-items:center;gap:12px}
+.hw-logo{width:44px;height:44px;background:#fff;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;font-weight:700;color:#1A3A5C;letter-spacing:0.5px}
+.hw-title{color:#fff;font-size:16px;font-weight:600;line-height:1.3}
+.hw-subtitle{color:#D6E4F0;font-size:12px;margin-top:2px}
+.tab-bar{display:flex;background:#F4F6F8;border-bottom:1px solid #D6E4F0}
+.tab{padding:11px 18px;font-size:13px;cursor:pointer;color:#4A7FA5;border-bottom:2px solid transparent;white-space:nowrap;font-family:'Calibri',Arial,sans-serif}
+.tab.active{color:#1A3A5C;border-bottom:2px solid #1A3A5C;font-weight:600}
+.tab:hover{color:#1A3A5C}
+.panel{display:none;padding:18px}
+.panel.active{display:block}
+.intro-note{font-size:12px;color:#4A7FA5;margin-bottom:16px;line-height:1.6;font-style:italic}
+.tier-label{font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:4px 10px;border-radius:4px;display:inline-block;margin-bottom:8px}
+.tier-1-label{background:#D6E4F0;color:#1A3A5C}
+.tier-2-label{background:#EAF3DE;color:#3B6D11}
+.tier-3-label{background:#F1EFE8;color:#5F5E5A}
+.tier-section{margin-bottom:22px}
+.tier-desc{font-size:12px;color:#4A7FA5;margin-bottom:10px;line-height:1.5}
+.word-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.word-card{background:#fff;border:1px solid #D6E4F0;border-radius:8px;padding:10px 12px;cursor:pointer;transition:border-color 0.15s}
+.word-card:hover{border-color:#2E6DA4}
+.word-card.selected{border-color:#1A3A5C;background:#EEF4FA}
+.word-term{font-size:14px;font-weight:600;color:#1A3A5C}
+.word-pos{font-size:11px;color:#8A9BB0;margin-top:2px}
+.word-detail{display:none;margin-top:8px;padding-top:8px;border-top:1px solid #D6E4F0}
+.word-detail.open{display:block}
+.word-context{font-size:12px;color:#4A7FA5;font-style:italic;line-height:1.6;margin-bottom:6px}
+.word-meaning{font-size:12px;color:#3D4F5C;line-height:1.5;margin-bottom:4px}
+.ipa{font-size:12px;color:#2E6DA4;font-family:monospace}
+.activity-header{font-size:14px;font-weight:600;color:#1A3A5C;margin-bottom:8px}
+.activity-desc{font-size:12px;color:#4A7FA5;margin-bottom:16px;line-height:1.5}
+.gap-item{background:#fff;border:1px solid #D6E4F0;border-radius:8px;padding:12px 14px;margin-bottom:10px;font-size:13px;line-height:1.8;color:#3D4F5C}
+.gap-item select{border:1px solid #2E6DA4;border-radius:4px;padding:2px 6px;font-size:13px;color:#1A3A5C;background:#fff;cursor:pointer;font-family:'Calibri',Arial,sans-serif}
+.gap-item select.correct{border-color:#3B6D11;background:#EAF3DE;color:#3B6D11}
+.gap-item select.incorrect{border-color:#A32D2D;background:#FCEBEB;color:#A32D2D}
+.btn{background:#1A3A5C;color:#fff;border:none;border-radius:6px;padding:9px 20px;font-size:13px;cursor:pointer;font-weight:600;font-family:'Calibri',Arial,sans-serif}
+.btn:hover{background:#2E6DA4}
+.btn-outline{background:transparent;color:#1A3A5C;border:1px solid #1A3A5C;border-radius:6px;padding:9px 20px;font-size:13px;cursor:pointer;font-family:'Calibri',Arial,sans-serif}
+.btn-outline:hover{background:#EEF4FA}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.match-col-label{font-size:11px;font-weight:600;color:#8A9BB0;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em}
+.match-item{background:#fff;border:1px solid #D6E4F0;border-radius:6px;padding:9px 12px;font-size:13px;cursor:pointer;min-height:44px;display:flex;align-items:center;transition:all 0.15s;line-height:1.4;color:#3D4F5C}
+.match-item:hover{border-color:#2E6DA4}
+.match-item.selected-term{border-color:#1A3A5C;background:#D6E4F0;color:#1A3A5C}
+.match-item.selected-def{border-color:#2E6DA4;background:#EEF4FA;color:#1A3A5C}
+.match-item.matched{border-color:#3B6D11;background:#EAF3DE;color:#3B6D11;cursor:default}
+.match-item.wrong{border-color:#A32D2D;background:#FCEBEB;color:#A32D2D}
+.progress{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.prog-dot{width:11px;height:11px;border-radius:50%;background:#D6E4F0;flex-shrink:0;transition:background 0.2s}
+.prog-dot.done{background:#1A3A5C}
+.prog-dot.wrong-dot{background:#E24B4A}
+.buttons-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;align-items:center}
+.score-text{font-size:13px;color:#4A7FA5}
+.score-text strong{color:#1A3A5C}
+.attribution{font-size:11px;color:#8A9BB0;padding:10px 18px;border-top:1px solid #D6E4F0;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hw-header">
+  <div class="hw-logo">HW</div>
+  <div>
+    <div class="hw-title">Vocabulary for the Carrigan Listening</div>
+    <div class="hw-subtitle">PSE 2026 &nbsp;·&nbsp; Module 2, Week 7 &nbsp;·&nbsp; Self-study resource</div>
+  </div>
+</div>
+
+<div class="tab-bar">
+  <div class="tab active" onclick="switchTab('explore')">Explore words</div>
+  <div class="tab" onclick="switchTab('match')">Match activity</div>
+  <div class="tab" onclick="switchTab('gap')">Gap fill</div>
+</div>
+
+<div id="tab-explore" class="panel active">
+  <p class="intro-note">Click any word to see it used in context from Prof Carrigan's talk, with its meaning and pronunciation. Start with Tier 1 — these will help you most in the listening session.</p>
+  <div class="tier-section">
+    <span class="tier-label tier-1-label">Tier 1 — highest priority</span>
+    <p class="tier-desc">These terms carry Carrigan's main argument. You will hear them in the talk and need them for your notes and written sentences.</p>
+    <div class="word-grid" id="grid-tier1"></div>
+  </div>
+  <div class="tier-section">
+    <span class="tier-label tier-2-label">Tier 2 — useful for the examples</span>
+    <p class="tier-desc">These words appear in Carrigan's key examples — St Ives, Oban, the circular economy. Understanding them helps you follow the detail.</p>
+    <div class="word-grid" id="grid-tier2"></div>
+  </div>
+  <div class="tier-section">
+    <span class="tier-label tier-3-label">Tier 3 — worth knowing</span>
+    <p class="tier-desc">These are interesting words from the talk. They are lower priority but will extend your academic vocabulary.</p>
+    <div class="word-grid" id="grid-tier3"></div>
+  </div>
+</div>
+
+<div id="tab-match" class="panel">
+  <div class="activity-header">Matching activity</div>
+  <div class="activity-desc">Match each term on the left to its meaning on the right. Click a term, then click its meaning. 8 pairs per round — click <strong>New round</strong> to reshuffle.</div>
+  <div class="progress" id="match-progress"></div>
+  <div class="match-grid">
+    <div><div class="match-col-label">Terms</div><div id="match-terms"></div></div>
+    <div><div class="match-col-label">Meanings</div><div id="match-defs"></div></div>
+  </div>
+  <div class="buttons-row">
+    <button class="btn" onclick="newMatchRound()">New round</button>
+    <div id="match-score" class="score-text"></div>
+  </div>
+</div>
+
+<div id="tab-gap" class="panel">
+  <div class="activity-header">Gap fill</div>
+  <div class="activity-desc">Choose the correct word to complete each sentence from Carrigan's talk. Use the dropdown in each gap, then click <strong>Check answers</strong>.</div>
+  <div id="gap-items"></div>
+  <div class="buttons-row">
+    <button class="btn" onclick="checkGaps()">Check answers</button>
+    <button class="btn-outline" onclick="resetGaps()">Reset</button>
+    <div id="gap-score" class="score-text"></div>
+  </div>
+</div>
+
+<div class="attribution">
+  Developed from: Carrigan, M. (2023). <em>'How achievable is sustainability through a circular economy?'</em> [Lecture recording]. Edinburgh Business School, Heriot-Watt University. &nbsp;|&nbsp; Designed using Claude (Anthropic, April 2026). Task design informed by Nation (2001) and Flowerdew (1994).
+</div>
+
+</div>
+
+<script>
+const words=[
+  {term:"attitude-behaviour gap",pos:"noun phrase",ipa:"/ˈætɪtjuːd bɪˈheɪvjə ɡæp/",tier:1,context:"The research has consistently revealed that while consumers express sustainable concerns, they cannot always be relied upon to act upon those concerns, which is often talked about as the attitude behaviour gap.",meaning:"The gap between what people say they believe and what they actually do."},
+  {term:"dominant social paradigm",pos:"noun phrase",ipa:"/ˈdɒmɪnənt ˈsəʊʃl ˈpærədaɪm/",tier:1,context:"Could they take the chance of changing their business model from the dominant social paradigm — one that prioritises the notion that the Earth has limitless resources?",meaning:"The widespread assumption in society that the Earth has limitless resources and that economic growth and consumption are natural and good."},
+  {term:"coping choices",pos:"noun phrase",ipa:"/ˈkəʊpɪŋ ˈtʃɔɪsɪz/",tier:1,context:"People often have to make coping choices to simplify and manage the number of options we face when we're trying to be sustainable.",meaning:"Simplifying decisions people make to manage the overwhelming number of sustainable options."},
+  {term:"ethical literacy",pos:"noun phrase",ipa:"/ˈeθɪkl ˈlɪtərəsi/",tier:1,context:"Most consumers lack that necessary ethical literacy to make informed sustainable choices.",meaning:"The knowledge needed to make genuinely informed and responsible sustainable choices."},
+  {term:"wish cycling",pos:"noun phrase",ipa:"/wɪʃ ˈsaɪklɪŋ/",tier:1,context:"We end up carrying out wish cycling — putting something in recycling and hoping it can be recycled, even when it cannot.",meaning:"Putting items in recycling in the hope they will be recycled, even when they cannot be."},
+  {term:"front-end acquisition",pos:"noun phrase",ipa:"/frʌnt end ˌækwɪˈzɪʃn/",tier:1,context:"We need to focus less on the front end acquisition and more on how we use, dispose and discard what we have.",meaning:"The buying stage of consumption — criticised for drawing attention away from use, repair and disposal."},
+  {term:"boycott",pos:"verb / noun",ipa:"/ˈbɔɪkɒt/",tier:2,context:"Consumers who would boycott organisations that were irresponsible and be willing to pay more for products from ethical companies.",meaning:"To refuse to buy from or deal with a company as a form of protest."},
+  {term:"business model",pos:"noun phrase",ipa:"/ˈbɪznəs ˈmɒdl/",tier:2,context:"Could businesses take the chance of changing their business model from the dominant social paradigm?",meaning:"The way a company organises itself to make money and deliver value."},
+  {term:"seasonal produce",pos:"noun phrase",ipa:"/ˈsiːzənl ˈprɒdjuːs/",tier:2,context:"Businesses that source locally, farm and fish sustainably, forage ingredients and focus on seasonal produce.",meaning:"Food grown and sold at the time of year when it naturally ripens in that region."},
+  {term:"dilemma",pos:"noun",ipa:"/dɪˈlemə/",tier:2,context:"Several participants highlighted the dilemma that St Ives faces — tourism keeps businesses going but causes environmental damage.",meaning:"A difficult situation where you must choose between two options that both have disadvantages."},
+  {term:"priced out",pos:"phrasal verb",ipa:"/praɪst aʊt/",tier:2,context:"Peak tourism is causing huge environmental damage, pricing locals out of the housing market.",meaning:"When people can no longer afford to live somewhere because prices have risen too high."},
+  {term:"compostable",pos:"adjective",ipa:"/kəmˈpɒstəbl/",tier:2,context:"The cafe owners chose to use compostable single-use cups — but they need an industrial composter, which Oban does not have.",meaning:"Able to be broken down into natural material through composting, usually requiring industrial conditions."},
+  {term:"recyclable",pos:"adjective",ipa:"/rɪˈsaɪkləbl/",tier:2,context:"How difficult people find it to decide what to place in their different recycling bins — are receipts recyclable?",meaning:"Able to be processed and used again rather than thrown away."},
+  {term:"shop ethically",pos:"verb phrase",ipa:"/ʃɒp ˈeθɪkli/",tier:2,context:"Consumers who were willing to buy and perhaps pay more for products from companies that treated their stakeholders with respect.",meaning:"To make purchasing decisions based on moral values — e.g. choosing fair trade, sustainable or locally sourced products."},
+  {term:"conundrum",pos:"noun",ipa:"/kəˈnʌndrəm/",tier:3,context:"The central message from the findings has remained a conundrum for many years — that's how elusive the ethical consumer seems to be.",meaning:"A confusing or difficult problem that is hard to solve."},
+  {term:"elusive",pos:"adjective",ipa:"/ɪˈluːsɪv/",tier:3,context:"That's how elusive the ethical consumer seems to be — hard to pin down despite years of research.",meaning:"Difficult to find, define or achieve."},
+  {term:"paradigm",pos:"noun",ipa:"/ˈpærədaɪm/",tier:3,context:"The dominant social paradigm prioritises the notion that the Earth has limitless resources.",meaning:"A widely accepted framework or way of thinking in an academic field."},
+  {term:"transformative",pos:"adjective",ipa:"/trænsˈfɔːmətɪv/",tier:3,context:"Collectively, local sustainable movements could be transformative even if they only have local rather than global potential.",meaning:"Causing a major and lasting change."},
+  {term:"convoluted",pos:"adjective",ipa:"/ˈkɒnvəluːtɪd/",tier:3,context:"The complexity of sustainable consumption requires too many convoluted trade-offs for people, so they just give up.",meaning:"Extremely complex and difficult to follow."},
+  {term:"awareness",pos:"noun",ipa:"/əˈweənəs/",tier:3,context:"Increasingly there is more awareness that what we need to do is actually stop our unsustainable levels of consumption.",meaning:"Knowledge or understanding of a situation or subject."}
+];
+
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(el=>el.classList.remove('active'));
+  document.querySelector('[onclick="switchTab(\''+t+'\')"]').classList.add('active');
+  document.getElementById('tab-'+t).classList.add('active');
+}
+
+function buildExplore(){
+  [1,2,3].forEach(tier=>{
+    const grid=document.getElementById('grid-tier'+tier);
+    words.filter(w=>w.tier===tier).forEach(w=>{
+      const card=document.createElement('div');
+      card.className='word-card';
+      card.innerHTML='<div class="word-term">'+w.term+'</div><div class="word-pos">'+w.pos+'</div><div class="word-detail"><div class="word-context">&ldquo;'+w.context+'&rdquo;</div><div class="word-meaning">'+w.meaning+'</div><div class="ipa">'+w.ipa+'</div></div>';
+      card.onclick=function(){
+        const det=card.querySelector('.word-detail');
+        const open=det.classList.contains('open');
+        document.querySelectorAll('.word-detail.open').forEach(d=>d.classList.remove('open'));
+        document.querySelectorAll('.word-card.selected').forEach(c=>c.classList.remove('selected'));
+        if(!open){det.classList.add('open');card.classList.add('selected');}
+      };
+      grid.appendChild(card);
+    });
+  });
+}
+
+let matchSelected=null,matchCorrect=0,matchTotal=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function newMatchRound(){
+  matchSelected=null;matchCorrect=0;matchTotal=0;
+  const pool=shuffle([...words]).slice(0,8);
+  const defs=shuffle(pool.map(w=>({id:w.term,text:w.meaning})));
+  const termsEl=document.getElementById('match-terms');
+  const defsEl=document.getElementById('match-defs');
+  const prog=document.getElementById('match-progress');
+  const score=document.getElementById('match-score');
+  termsEl.innerHTML='';defsEl.innerHTML='';prog.innerHTML='';score.innerHTML='';
+  pool.forEach(w=>{
+    const dot=document.createElement('div');dot.className='prog-dot';dot.id='dot-'+w.term.replace(/\s+/g,'-').replace(/[^a-zA-Z0-9-]/g,'');prog.appendChild(dot);
+    const el=document.createElement('div');el.className='match-item';el.textContent=w.term;el.dataset.id=w.term;el.dataset.type='term';
+    el.onclick=function(){handleMatch(el,pool);};termsEl.appendChild(el);
+  });
+  defs.forEach(d=>{
+    const el=document.createElement('div');el.className='match-item';el.textContent=d.text;el.dataset.id=d.id;el.dataset.type='def';
+    el.onclick=function(){handleMatch(el,pool);};defsEl.appendChild(el);
+  });
+}
+
+function handleMatch(el,pool){
+  if(el.classList.contains('matched')||el.classList.contains('wrong'))return;
+  if(!matchSelected){
+    document.querySelectorAll('.match-item.selected-term,.match-item.selected-def').forEach(e=>{e.classList.remove('selected-term','selected-def');});
+    matchSelected=el;
+    el.classList.add(el.dataset.type==='term'?'selected-term':'selected-def');
+  } else {
+    if(matchSelected.dataset.type===el.dataset.type){
+      document.querySelectorAll('.match-item.selected-term,.match-item.selected-def').forEach(e=>{e.classList.remove('selected-term','selected-def');});
+      matchSelected=el;el.classList.add(el.dataset.type==='term'?'selected-term':'selected-def');return;
+    }
+    const termEl=matchSelected.dataset.type==='term'?matchSelected:el;
+    const defEl=matchSelected.dataset.type==='def'?matchSelected:el;
+    matchTotal++;
+    const dotId='dot-'+termEl.dataset.id.replace(/\s+/g,'-').replace(/[^a-zA-Z0-9-]/g,'');
+    const dot=document.getElementById(dotId);
+    if(termEl.dataset.id===defEl.dataset.id){
+      termEl.classList.remove('selected-term');defEl.classList.remove('selected-def');
+      termEl.classList.add('matched');defEl.classList.add('matched');
+      termEl.onclick=null;defEl.onclick=null;matchCorrect++;
+      if(dot)dot.classList.add('done');
+    } else {
+      termEl.classList.add('wrong');defEl.classList.add('wrong');
+      if(dot)dot.classList.add('wrong-dot');
+      setTimeout(function(){termEl.classList.remove('wrong','selected-term');defEl.classList.remove('wrong','selected-def');},800);
+    }
+    document.getElementById('match-score').innerHTML='<strong>'+matchCorrect+'</strong> / '+matchTotal+' correct';
+    matchSelected=null;
+  }
+}
+
+const gapSentences=[
+  {sentence:"While consumers express sustainable concerns, they cannot always be relied upon to act on them — this is the ___.",answer:"attitude-behaviour gap",options:["attitude-behaviour gap","wish cycling","ethical literacy","coping choices"]},
+  {sentence:"Businesses could change their model from the ___ — the assumption that the Earth has limitless resources.",answer:"dominant social paradigm",options:["dominant social paradigm","business model","front-end acquisition","paradigm"]},
+  {sentence:"People often have to make ___ to simplify and manage the number of options they face when trying to be sustainable.",answer:"coping choices",options:["coping choices","dilemma","awareness","boycott"]},
+  {sentence:"Most consumers lack the necessary ___ to make informed sustainable choices.",answer:"ethical literacy",options:["ethical literacy","awareness","paradigm","transformative"]},
+  {sentence:"We end up carrying out ___ — putting something in recycling and hoping it can be recycled, even when it cannot.",answer:"wish cycling",options:["wish cycling","recyclable","compostable","boycott"]},
+  {sentence:"We need to focus less on ___ and more on how we use, dispose and discard what we have.",answer:"front-end acquisition",options:["front-end acquisition","business model","seasonal produce","ethical literacy"]},
+  {sentence:"The cafe owners chose to use ___ single-use cups, but without an industrial composter the cups went to landfill.",answer:"compostable",options:["compostable","recyclable","seasonal","ethical"]},
+  {sentence:"Peak tourism is ___ locals of the housing market, making it hard for workers to live in St Ives.",answer:"priced out",options:["priced out","boycotted","composted","convoluted"]}
+];
+
+function buildGaps(){
+  const container=document.getElementById('gap-items');container.innerHTML='';
+  gapSentences.forEach(function(g,i){
+    const opts=shuffle([...g.options]);
+    const parts=g.sentence.split('___');
+    const div=document.createElement('div');div.className='gap-item';div.id='gap-'+i;
+    div.innerHTML=parts[0]+'<select id="sel-'+i+'"><option value="">— choose —</option>'+opts.map(function(o){return'<option value="'+o+'">'+o+'</option>';}).join('')+'</select>'+parts[1];
+    container.appendChild(div);
+  });
+  document.getElementById('gap-score').innerHTML='';
+}
+
+function checkGaps(){
+  let correct=0;
+  gapSentences.forEach(function(g,i){
+    const sel=document.getElementById('sel-'+i);
+    if(!sel)return;
+    sel.classList.remove('correct','incorrect');
+    if(sel.value===g.answer){sel.classList.add('correct');correct++;}
+    else if(sel.value){sel.classList.add('incorrect');}
+  });
+  document.getElementById('gap-score').innerHTML='<strong>'+correct+' / '+gapSentences.length+'</strong> correct';
+}
+
+function resetGaps(){buildGaps();}
+
+buildExplore();newMatchRound();buildGaps();
+</script>
+</body>
+</html>
